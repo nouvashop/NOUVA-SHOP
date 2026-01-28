@@ -40,13 +40,25 @@
     .cart-panel input{width:100%;margin-bottom:10px;padding:8px;border-radius:8px;border:none}
     .order-btn{background:var(--gold);color:#000;padding:12px;border:none;border-radius:30px;width:100%;font-size:16px;cursor:pointer}
 
-    @media(max-width:600px){
+    @keyframes pulse{0%{opacity:.6}50%{opacity:1}100%{opacity:.6}}
+
+@media(max-width:600px){
       header h1{font-size:20px}
       .card img{height:220px}
     }
   </style>
 </head>
 <body>
+
+<div id="notify" style="position:fixed;bottom:20px;left:20px;background:#111;border:1px solid var(--gold);padding:12px 18px;border-radius:14px;box-shadow:0 0 15px rgba(212,175,55,.3);display:none;z-index:200;font-size:14px"></div>
+
+<div id="popup" style="position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:300">
+  <div style="background:#111;padding:25px;border-radius:20px;border:1px solid var(--gold);text-align:center;max-width:320px">
+    <h3 style="color:var(--gold)">🎁 خصم خاص</h3>
+    <p>استافد من خصم %10 على أول طلب</p>
+    <button class="order-btn" onclick="closePopup()">استافد دابا</button>
+  </div>
+</div>
 
 <header>
   <div class="top-actions">
@@ -57,7 +69,26 @@
   <h1>NOUVA SHOP</h1>
 </header>
 
+<section style="text-align:center;padding:15px">
+  <div id="countdown" style="font-size:18px;color:var(--gold);animation:pulse 1.5s infinite">⏳ عرض محدود ينتهي بعد: --:--:--</div>
+</section>
+
+
 <section class="products" id="products"></section>
+
+<section style="padding:20px">
+  <h2 style="color:var(--gold);text-align:center">⭐ آراء الزبناء</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px">
+    <div class="card"><div class="card-content">"منتوج فخم وخدمة سريعة"<br>— أمين</div></div>
+    <div class="card"><div class="card-content">"ثقة وجودة عالية"<br>— سارة</div></div>
+    <div class="card"><div class="card-content">"غادي نعاود نطلب"<br>— يوسف</div></div>
+  </div>
+</section>
+
+<section style="padding:20px;text-align:center">
+  <h3 style="color:var(--gold)">🔒 ضمان الثقة</h3>
+  <p>✔️ الدفع عند الاستلام<br>✔️ توصيل سريع لجميع المدن<br>✔️ خدمة الزبناء عبر WhatsApp</p>
+</section>
 
 <div class="modal" id="modal">
   <div class="modal-content" id="modalContent"></div>
@@ -66,6 +97,12 @@
 <div class="cart" onclick="toggleCart()">🛒</div>
 
 <div class="cart-panel" id="cartPanel">
+  <h3 id="orderTitle">🧾 معلومات الطلب</h3>
+  <input placeholder="الإسم الكامل" id="name" />
+  <input placeholder="المدينة" id="city" />
+  <input placeholder="الحي" id="area" />
+  <input placeholder="الهاتف" id="phone" />
+  <input placeholder="كود تتبع الطلب (اختياري)" id="track" />
   <h3 id="orderTitle">اطلب الآن</h3>
   <input placeholder="الإسم" id="name" />
   <input placeholder="المدينة، الحي" id="city" />
@@ -110,10 +147,41 @@
   function toggleCurrency(){currency=currency==='MAD'?'EUR':'MAD';render()}
 
   function sendWhatsApp(){
+    const n=name.value,c=city.value,a=area.value,p=phone.value,t=track.value;
+    const orderId='NS'+Math.floor(Math.random()*100000);
+    const msg=`🛒 Nouva Shop Order%0A🆔 Order ID: ${orderId}%0A👤 Name: ${n}%0A🏙️ City: ${c}%0A📍 Area: ${a}%0A📞 Phone: ${p}%0A📦 Tracking: ${t}`;
+    window.open(`https://wa.me/212623999334?text=${msg}`,'_blank');
+  }
+
+  // notifications
+  const names=['أمين','سارة','يوسف','هشام','مريم'];
+  const cities=['الدار البيضاء','الرباط','مراكش','طنجة','فاس'];
+  setInterval(()=>{
+    const n=names[Math.floor(Math.random()*names.length)];
+    const c=cities[Math.floor(Math.random()*cities.length)];
+    const box=document.getElementById('notify');
+    box.innerText=`🔔 ${n} من ${c} قام بطلب منتوج الآن`;
+    box.style.display='block';
+    setTimeout(()=>box.style.display='none',4000);
+  },9000);
+
+  function closePopup(){document.getElementById('popup').style.display='none'}(){
     const n=name.value,c=city.value,p=phone.value;
     const msg=`Order Nouva Shop%0AName:${n}%0ACity:${c}%0APhone:${p}`;
     window.open(`https://wa.me/212623999334?text=${msg}`,'_blank');
   }
+
+  // Countdown
+  let seconds=6*60*60;
+  setInterval(()=>{
+    if(seconds>0){
+      seconds--;
+      const h=String(Math.floor(seconds/3600)).padStart(2,'0');
+      const m=String(Math.floor((seconds%3600)/60)).padStart(2,'0');
+      const s=String(seconds%60).padStart(2,'0');
+      document.getElementById('countdown').innerText=`⏳ عرض محدود ينتهي بعد: ${h}:${m}:${s}`;
+    }
+  },1000);
 
   render();
 </script>
