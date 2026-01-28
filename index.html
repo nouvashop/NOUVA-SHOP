@@ -79,9 +79,9 @@
 <section style="padding:20px">
   <h2 style="color:var(--gold);text-align:center">⭐ آراء الزبناء</h2>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px">
-    <div class="card"><div class="card-content">"منتوج فخم وخدمة سريعة"<br>— أمين</div></div>
-    <div class="card"><div class="card-content">"ثقة وجودة عالية"<br>— سارة</div></div>
-    <div class="card"><div class="card-content">"غادي نعاود نطلب"<br>— يوسف</div></div>
+    <div class="card" onclick="addToCart(${p.id})"><div class="card-content">"منتوج فخم وخدمة سريعة"<br>— أمين</div></div>
+    <div class="card" onclick="addToCart(${p.id})"><div class="card-content">"ثقة وجودة عالية"<br>— سارة</div></div>
+    <div class="card" onclick="addToCart(${p.id})"><div class="card-content">"غادي نعاود نطلب"<br>— يوسف</div></div>
   </div>
 </section>
 
@@ -111,13 +111,23 @@
 </div>
 
 <script>
-  let lang='ar', currency='MAD';
+  let lang='ar', currency='MAD'; let cartItems=[];
   const rate=0.092; // MAD to EUR approx
 
   const products=[
+    {id:1,name:{ar:'ساعة فاخرة',en:'Luxury Watch'},price:1200,img:'https://dummyimage.com/600x600/111/ffffff&text=WATCH',desc:{ar:'ساعة راقية بتصميم ذهبي مع ضمان.',en:'Premium gold luxury watch with warranty.'}},
+    {id:2,name:{ar:'نظارات شمسية',en:'Sunglasses'},price:800,img:'https://dummyimage.com/600x600/111/ffffff&text=GLASSES',desc:{ar:'نظارات فخمة بعدسات UV.',en:'Luxury UV protection sunglasses.'}},
+    {id:3,name:{ar:'محفظة جلد',en:'Leather Wallet'},price:500,img:'https://dummyimage.com/600x600/111/ffffff&text=WALLET',desc:{ar:'محفظة جلد طبيعي.',en:'Genuine leather wallet.'}}
+  ];
     {name:{ar:'ساعة فاخرة',en:'Luxury Watch'},price:1200,img:'https://dummyimage.com/600x600/111/ffffff&text=WATCH',desc:{ar:'ساعة راقية بتصميم ذهبي.',en:'Elegant gold luxury watch.'}},
     {name:{ar:'نظارات شمسية',en:'Sunglasses'},price:800,img:'https://dummyimage.com/600x600/111/ffffff&text=GLASSES',desc:{ar:'نظارات فخمة بجودة عالية.',en:'Premium quality sunglasses.'}}
   ];
+
+  function addToCart(id){
+    const prod=products.find(p=>p.id===id);
+    cartItems.push({name:prod.name[lang],price:prod.price});
+    alert(lang==='ar'?'تمت إضافة المنتوج للسلة':'Product added to cart');
+  }
 
   function render(){
     const c=document.getElementById('products');
@@ -125,7 +135,7 @@
     products.forEach(p=>{
       const price=currency==='MAD'?p.price:(p.price*rate).toFixed(0);
       c.innerHTML+=`
-      <div class="card">
+      <div class="card" onclick="addToCart(${p.id})">
         <img src="${p.img}" onclick="showDetails('${p.desc[lang]}')" />
         <div class="card-content">
           <div class="old-price">${currency==='MAD'?'MAD':'€'} ${price*1.2}</div>
@@ -149,7 +159,8 @@
   function sendWhatsApp(){
     const n=name.value,c=city.value,a=area.value,p=phone.value,t=track.value;
     const orderId='NS'+Math.floor(Math.random()*100000);
-    const msg=`🛒 Nouva Shop Order%0A🆔 Order ID: ${orderId}%0A👤 Name: ${n}%0A🏙️ City: ${c}%0A📍 Area: ${a}%0A📞 Phone: ${p}%0A📦 Tracking: ${t}`;
+    const items=cartItems.map(i=>i.name+' x1').join(', ');
+    const msg=`🛒 Nouva Shop Order%0A📦 Products: ${items}%0A🆔 Order ID: ${orderId}%0A👤 Name: ${n}%0A🏙️ City: ${c}%0A📍 Area: ${a}%0A📞 Phone: ${p}%0A📦 Tracking: ${t}`;
     window.open(`https://wa.me/212623999334?text=${msg}`,'_blank');
   }
 
