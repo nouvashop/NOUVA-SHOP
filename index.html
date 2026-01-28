@@ -1,1 +1,76 @@
-<img src="${p.img}" alt="${p.name[language]}" class="product-img">
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOUVA SHOP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="images/logo.png" alt="NOUVA SHOP Logo">
+            <h1>NOUVA SHOP</h1>
+        </div>
+        <div class="top-buttons">
+            <button id="language-toggle">EN / عربي</button>
+            <button class="cart-btn">🛒</button>
+        </div>
+    </header>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar">
+        <button class="close-cart">❌</button>
+        <h2>سلة المشتريات</h2>
+        <div class="cart-items"></div>
+        <div class="cart-total">
+            <p>المجموع: <span id="total-price">0</span> <span id="currency">DH</span></p>
+            <a id="whatsapp-order" href="#" target="_blank">اطلب الأن</a>
+        </div>
+        <div class="currency-toggle">
+            <button id="dh-btn">DH</button>
+            <button id="eur-btn">€</button>
+        </div>
+    </div>
+
+    <!-- Products Section -->
+    <main>
+        <section class="products">
+            <!-- 20 Products Example -->
+            <div class="product" data-price="200" data-sale="150" data-description="وصف المنتج الأول">
+                <img src="images/product1.jpg" alt="Product 1">
+                <h3 class="product-name">منتج 1</h3>
+                <p class="price">
+                    <span class="original">200 DH</span>
+                    <span class="sale">150 DH</span>
+                </p>
+            </div>
+            <div class="product" data-price="300" data-sale="250" data-description="وصف المنتج الثاني">
+                <img src="images/product2.jpg" alt="Product 2">
+                <h3 class="product-name">منتج 2</h3>
+                <p class="price">
+                    <span class="original">300 DH</span>
+                    <span class="sale">250 DH</span>
+                </p>
+            </div>
+            <!-- كرر حتى 20 منتج -->
+        </section>
+    </main>
+
+    <!-- Product Modal -->
+    <div class="product-modal">
+        <div class="modal-content">
+            <span class="close-modal">❌</span>
+            <img src="" alt="Product Image" id="modal-img">
+            <h3 id="modal-name"></h3>
+            <p id="modal-desc"></p>
+            <p>السعر الأساسي: <span id="modal-original"></span></p>
+            <p>سعر التخفيض: <span id="modal-sale"></span></p>
+            <button class="add-to-cart">أضف للسلة</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
