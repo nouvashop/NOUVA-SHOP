@@ -1,88 +1,41 @@
-/* Reset */
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+/* تأثير shimmer على اللوغو */
+@keyframes shimmer { 0%{filter:brightness(1)}50%{filter:brightness(1.7)}100%{filter:brightness(1)} }
+.logo { animation: shimmer 3s infinite linear; }
 
-/* الصفحة بالكامل */
-body { background: #fff8f0; color: #333; }
-
-/* الهيدر */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background: linear-gradient(90deg, #d4af37, #ffd700);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+/* تأثير glow على الصور */
+.product-card img {
+    width:100%; border-radius:12px;
+    transition: transform 0.5s, box-shadow 0.5s, filter 0.5s;
+}
+.product-card img:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 25px 5px #ffd700;
+    filter: brightness(1.2);
 }
 
-.logo-container { display: flex; align-items: center; }
-.logo { width: 60px; margin-right: 10px; }
-.shop-name { font-size: 1.8rem; font-weight: bold; color: #fff; }
-
-.top-buttons { display: flex; align-items: center; gap: 10px; }
-.top-buttons button { padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; }
-.cart { position: relative; font-size: 1.5rem; cursor: pointer; }
-#cartCount { position: absolute; top: -8px; right: -8px; background: red; color: #fff; border-radius: 50%; padding: 2px 6px; font-size: 0.8rem; }
-
-/* قسم المنتجات */
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-    padding: 20px;
+/* تأثير glow على السعر */
+.discount-price:hover {
+    text-shadow: 0 0 10px #ff0000, 0 0 20px #ffd700, 0 0 30px #fff;
+    transition: text-shadow 0.5s;
+}
+.old-price:hover {
+    text-shadow: 0 0 8px #aaa, 0 0 15px #fff;
 }
 
-.product-card {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    padding: 10px;
-    text-align: center;
-    cursor: pointer;
+/* تأثير hover على أزرار الطلب */
+#orderBtn:hover, #orderWhatsApp:hover {
+    background: linear-gradient(90deg,#ffd700,#d4af37);
+    box-shadow: 0 0 15px #ffd700, 0 0 25px #d4af37 inset;
+    transform: scale(1.05);
+    transition: all 0.3s;
 }
 
-.product-card img { width: 100%; border-radius: 10px; }
-.product-card .name { font-weight: bold; margin: 10px 0; }
-.product-card .price { margin-top: 5px; }
-.product-card .old-price { text-decoration: line-through; color: #aaa; }
-.product-card .discount-price { color: red; font-weight: bold; }
+/* نافذة المنتج fade in */
+@keyframes fadeIn { from{opacity:0; transform:scale(0.9);} to{opacity:1; transform:scale(1);} }
+.modal-content { animation: fadeIn 0.5s; }
 
-/* نافذة المنتج */
-.product-modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
-    justify-content: center; align-items: center;
+/* موبايل */
+@media(max-width:600px){
+    .products { grid-template-columns: repeat(auto-fit,minmax(120px,1fr)); }
+    .shop-name { font-size:1.5rem; }
 }
-
-.modal-content {
-    background: #fff;
-    border-radius: 12px;
-    padding: 20px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    position: relative;
-}
-
-.close-btn { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; cursor: pointer; }
-.modal-content img { width: 100%; border-radius: 10px; margin-bottom: 10px; }
-.modal-content .price { margin: 10px 0; }
-.modal-content .price span { display: block; }
-#orderBtn { background: #d4af37; color: #fff; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
-
-/* سلة المشتريات */
-.cart-modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-    justify-content: center; align-items: center;
-}
-
-.cart-modal ul { list-style: none; margin: 15px 0; max-height: 200px; overflow-y: auto; }
-.cart-modal li { background: #fff; margin: 5px 0; padding: 8px; border-radius: 8px; display: flex; justify-content: space-between; }
-.close-cart { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; cursor: pointer; }
-#orderWhatsApp { background: #25D366; color: #fff; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
