@@ -1,76 +1,122 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOUVA SHOP</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOUVA SHOP | Luxury Store</title>
+  <style>
+    :root{
+      --gold:#d4af37;
+      --dark:#0e0e0e;
+      --soft:#777;
+      --red:#c0392b;
+    }
+    *{box-sizing:border-box;font-family:'Segoe UI',Tahoma,sans-serif}
+    body{margin:0;background:linear-gradient(180deg,#000,#111);color:#fff}
+    header{padding:20px;text-align:center;position:relative}
+    header img{width:90px;height:90px;border-radius:50%;border:3px solid var(--gold)}
+    header h1{margin:10px 0 0;color:var(--gold);letter-spacing:2px}
+
+    .top-actions{position:absolute;top:15px;left:15px;display:flex;gap:10px}
+    .btn{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:6px 12px;border-radius:20px;cursor:pointer}
+
+    .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;padding:20px}
+    .card{background:#111;border-radius:20px;box-shadow:0 0 15px rgba(212,175,55,.15);overflow:hidden}
+    .card img{width:100%;height:280px;object-fit:cover;cursor:pointer}
+    .card-content{padding:15px}
+    .old-price{text-decoration:line-through;color:var(--soft)}
+    .new-price{color:var(--red);font-size:20px;font-weight:bold}
+    .desc{margin-top:8px;color:#ccc;font-size:14px}
+
+    /* modal */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:99}
+    .modal-content{background:#111;border-radius:20px;padding:20px;max-width:400px;border:1px solid var(--gold)}
+
+    /* cart */
+    .cart{position:fixed;top:20px;right:20px;width:55px;height:55px;border-radius:50%;background:var(--gold);color:#000;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;z-index:100}
+    .cart-panel{position:fixed;top:0;right:-100%;width:320px;height:100%;background:#0c0c0c;padding:20px;transition:.4s;z-index:101}
+    .cart-panel.active{right:0}
+    .cart-panel h3{color:var(--gold)}
+    .cart-panel input{width:100%;margin-bottom:10px;padding:8px;border-radius:8px;border:none}
+    .order-btn{background:var(--gold);color:#000;padding:12px;border:none;border-radius:30px;width:100%;font-size:16px;cursor:pointer}
+
+    @media(max-width:600px){
+      header h1{font-size:20px}
+      .card img{height:220px}
+    }
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="logo">
-            <img src="images/logo.png" alt="NOUVA SHOP Logo">
-            <h1>NOUVA SHOP</h1>
-        </div>
-        <div class="top-buttons">
-            <button id="language-toggle">EN / عربي</button>
-            <button class="cart-btn">🛒</button>
-        </div>
-    </header>
 
-    <!-- Cart Sidebar -->
-    <div class="cart-sidebar">
-        <button class="close-cart">❌</button>
-        <h2>سلة المشتريات</h2>
-        <div class="cart-items"></div>
-        <div class="cart-total">
-            <p>المجموع: <span id="total-price">0</span> <span id="currency">DH</span></p>
-            <a id="whatsapp-order" href="#" target="_blank">اطلب الأن</a>
-        </div>
-        <div class="currency-toggle">
-            <button id="dh-btn">DH</button>
-            <button id="eur-btn">€</button>
-        </div>
-    </div>
+<header>
+  <div class="top-actions">
+    <button class="btn" onclick="toggleLang()">AR / EN</button>
+    <button class="btn" onclick="toggleCurrency()">MAD / €</button>
+  </div>
+  <img src="https://dummyimage.com/300x300/000/ffffff&text=NOUVA" alt="NOUVA SHOP" />
+  <h1>NOUVA SHOP</h1>
+</header>
 
-    <!-- Products Section -->
-    <main>
-        <section class="products">
-            <!-- 20 Products Example -->
-            <div class="product" data-price="200" data-sale="150" data-description="وصف المنتج الأول">
-                <img src="images/product1.jpg" alt="Product 1">
-                <h3 class="product-name">منتج 1</h3>
-                <p class="price">
-                    <span class="original">200 DH</span>
-                    <span class="sale">150 DH</span>
-                </p>
-            </div>
-            <div class="product" data-price="300" data-sale="250" data-description="وصف المنتج الثاني">
-                <img src="images/product2.jpg" alt="Product 2">
-                <h3 class="product-name">منتج 2</h3>
-                <p class="price">
-                    <span class="original">300 DH</span>
-                    <span class="sale">250 DH</span>
-                </p>
-            </div>
-            <!-- كرر حتى 20 منتج -->
-        </section>
-    </main>
+<section class="products" id="products"></section>
 
-    <!-- Product Modal -->
-    <div class="product-modal">
-        <div class="modal-content">
-            <span class="close-modal">❌</span>
-            <img src="" alt="Product Image" id="modal-img">
-            <h3 id="modal-name"></h3>
-            <p id="modal-desc"></p>
-            <p>السعر الأساسي: <span id="modal-original"></span></p>
-            <p>سعر التخفيض: <span id="modal-sale"></span></p>
-            <button class="add-to-cart">أضف للسلة</button>
+<div class="modal" id="modal">
+  <div class="modal-content" id="modalContent"></div>
+</div>
+
+<div class="cart" onclick="toggleCart()">🛒</div>
+
+<div class="cart-panel" id="cartPanel">
+  <h3 id="orderTitle">اطلب الآن</h3>
+  <input placeholder="الإسم" id="name" />
+  <input placeholder="المدينة، الحي" id="city" />
+  <input placeholder="الهاتف" id="phone" />
+  <button class="order-btn" onclick="sendWhatsApp()">📦 اطلب عبر WhatsApp</button>
+</div>
+
+<script>
+  let lang='ar', currency='MAD';
+  const rate=0.092; // MAD to EUR approx
+
+  const products=[
+    {name:{ar:'ساعة فاخرة',en:'Luxury Watch'},price:1200,img:'https://dummyimage.com/600x600/111/ffffff&text=WATCH',desc:{ar:'ساعة راقية بتصميم ذهبي.',en:'Elegant gold luxury watch.'}},
+    {name:{ar:'نظارات شمسية',en:'Sunglasses'},price:800,img:'https://dummyimage.com/600x600/111/ffffff&text=GLASSES',desc:{ar:'نظارات فخمة بجودة عالية.',en:'Premium quality sunglasses.'}}
+  ];
+
+  function render(){
+    const c=document.getElementById('products');
+    c.innerHTML='';
+    products.forEach(p=>{
+      const price=currency==='MAD'?p.price:(p.price*rate).toFixed(0);
+      c.innerHTML+=`
+      <div class="card">
+        <img src="${p.img}" onclick="showDetails('${p.desc[lang]}')" />
+        <div class="card-content">
+          <div class="old-price">${currency==='MAD'?'MAD':'€'} ${price*1.2}</div>
+          <div class="new-price">${currency==='MAD'?'MAD':'€'} ${price}</div>
+          <div class="desc">${p.name[lang]}</div>
         </div>
-    </div>
+      </div>`;
+    });
+  }
 
-    <script src="script.js"></script>
+  function showDetails(text){
+    document.getElementById('modalContent').innerText=text;
+    document.getElementById('modal').style.display='flex';
+  }
+  document.getElementById('modal').onclick=()=>modal.style.display='none';
+
+  function toggleCart(){cartPanel.classList.toggle('active')}
+  function toggleLang(){lang=lang==='ar'?'en':'ar';document.documentElement.dir=lang==='ar'?'rtl':'ltr';render()}
+  function toggleCurrency(){currency=currency==='MAD'?'EUR':'MAD';render()}
+
+  function sendWhatsApp(){
+    const n=name.value,c=city.value,p=phone.value;
+    const msg=`Order Nouva Shop%0AName:${n}%0ACity:${c}%0APhone:${p}`;
+    window.open(`https://wa.me/212623999334?text=${msg}`,'_blank');
+  }
+
+  render();
+</script>
+
 </body>
 </html>
