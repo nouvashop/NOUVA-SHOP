@@ -1,194 +1,121 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NOUVA SHOP | Luxury Store</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOUVA SHOP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Open+Sans&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --gold:#d4af37;
-      --dark:#0e0e0e;
-      --soft:#777;
-      --red:#c0392b;
-    }
-    *{box-sizing:border-box;font-family:'Segoe UI',Tahoma,sans-serif}
-    body{margin:0;background:linear-gradient(180deg,#000,#111);color:#fff}
-    header{padding:20px;text-align:center;position:relative}
-    header img{width:90px;height:90px;border-radius:50%;border:3px solid var(--gold)}
-    header h1{margin:10px 0 0;color:var(--gold);letter-spacing:2px}
+    /* Reset and fonts */
+    * { margin:0; padding:0; box-sizing:border-box; font-family: 'Open Sans', sans-serif; }
+    body { background-color:#1a1a1a; color:#FFD37F; }
 
-    .top-actions{position:absolute;top:15px;left:15px;display:flex;gap:10px}
-    .btn{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:6px 12px;border-radius:20px;cursor:pointer}
+    /* Header */
+    header { display:flex; justify-content:space-between; align-items:center; padding:20px 50px; background:#1a1a1a; color:#FFD37F; }
+    header .logo { font-family:'Montserrat', sans-serif; font-size:28px; font-weight:700; letter-spacing:2px; }
+    header nav a { color:#FFD37F; margin-left:30px; text-decoration:none; font-weight:500; transition:0.3s; }
+    header nav a:hover { color:#fff; }
 
-    .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;padding:20px}
-    .card{background:#111;border-radius:20px;box-shadow:0 0 15px rgba(212,175,55,.15);overflow:hidden}
-    .card img{width:100%;height:280px;object-fit:cover;cursor:pointer}
-    .card-content{padding:15px}
-    .old-price{text-decoration:line-through;color:var(--soft)}
-    .new-price{color:var(--red);font-size:20px;font-weight:bold}
-    .desc{margin-top:8px;color:#ccc;font-size:14px}
+    /* Hero Section */
+    .hero { display:flex; justify-content:center; align-items:center; height:70vh; background: url('https://via.placeholder.com/1600x700') center/cover no-repeat; text-align:center; position:relative; }
+    .hero::after { content:""; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(26,26,26,0.6); }
+    .hero-content { position:relative; z-index:1; }
+    .hero h1 { font-family:'Montserrat', sans-serif; font-size:48px; margin-bottom:20px; color:#FFD37F; }
+    .hero button { padding:15px 30px; background:#FFD37F; color:#1a1a1a; border:none; font-weight:700; font-size:18px; cursor:pointer; transition:0.3s; }
+    .hero button:hover { background:#e6c200; }
 
-    /* modal */
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:99}
-    .modal-content{background:#111;border-radius:20px;padding:20px;max-width:400px;border:1px solid var(--gold)}
+    /* Products Grid */
+    .products { padding:50px; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:30px; }
+    .product { background:#2b2b2b; padding:20px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.3); text-align:center; transition:0.3s; }
+    .product img { width:100%; border-radius:15px; transition:0.3s; }
+    .product:hover img { transform:scale(1.05); box-shadow:0 10px 20px rgba(255,211,127,0.4); }
+    .product h3 { margin:15px 0 10px; font-family:'Montserrat', sans-serif; color:#FFD37F; }
+    .product p { font-weight:700; color:#FFD37F; margin-bottom:15px; }
+    .product button { padding:10px 20px; border:none; background:#FFD37F; color:#1a1a1a; font-weight:600; cursor:pointer; border-radius:8px; transition:0.3s; }
+    .product button:hover { background:#e6c200; }
 
-    /* cart */
-    .cart{position:fixed;top:20px;right:20px;width:55px;height:55px;border-radius:50%;background:var(--gold);color:#000;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;z-index:100}
-    .cart-panel{position:fixed;top:0;right:-100%;width:320px;height:100%;background:#0c0c0c;padding:20px;transition:.4s;z-index:101}
-    .cart-panel.active{right:0}
-    .cart-panel h3{color:var(--gold)}
-    .cart-panel input{width:100%;margin-bottom:10px;padding:8px;border-radius:8px;border:none}
-    .order-btn{background:var(--gold);color:#000;padding:12px;border:none;border-radius:30px;width:100%;font-size:16px;cursor:pointer}
+    /* Featured Section */
+    .featured { padding:50px; background:#2b2b2b; color:#FFD37F; text-align:center; }
+    .featured h2 { font-family:'Montserrat', sans-serif; font-size:36px; margin-bottom:30px; }
+    .featured img { width:80%; border-radius:15px; }
 
-    @keyframes pulse{0%{opacity:.6}50%{opacity:1}100%{opacity:.6}}
+    /* Footer */
+    footer { background:#1a1a1a; color:#FFD37F; padding:30px 50px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
+    footer .social a { color:#FFD37F; margin-left:20px; font-size:20px; text-decoration:none; transition:0.3s; }
+    footer .social a:hover { color:#fff; }
+    footer p { margin-top:10px; font-size:14px; }
 
-@media(max-width:600px){
-      header h1{font-size:20px}
-      .card img{height:220px}
+    @media(max-width:768px){
+      header { flex-direction:column; }
+      header nav { margin-top:10px; }
+      .hero h1 { font-size:36px; }
+      .hero button { font-size:16px; }
     }
   </style>
 </head>
 <body>
 
-<div id="notify" style="position:fixed;bottom:20px;left:20px;background:#111;border:1px solid var(--gold);padding:12px 18px;border-radius:14px;box-shadow:0 0 15px rgba(212,175,55,.3);display:none;z-index:200;font-size:14px">  
-  
+  <!-- Header -->
+  <header>
+    <div class="logo">NOUVA SHOP</div>
+    <nav>
+      <a href="#products">المنتجات</a>
+      <a href="#featured">عروضنا</a>
+      <a href="#contact">اتصل بنا</a>
+    </nav>
+  </header>
 
-<header>
-  <div class="top-actions">
-    <button class="btn" onclick="toggleLang()">AR / EN</button>
-    <button class="btn" onclick="toggleCurrency()">MAD / €</button>
-  </div>
-  <img src="https://dummyimage.com/300x300/000/ffffff&text=NOUVA" alt="NOUVA SHOP" />
-  <h1>NOUVA SHOP</h1>
-</header>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>حل ذكي لكل مقهى راقي</h1>
+      <button>تسوق الآن</button>
+    </div>
+  </section>
 
-<section style="text-align:center;padding:15px">
-  <div id="countdown" style="font-size:18px;color:var(--gold);animation:pulse 1.5s infinite">⏳ عرض محدود ينتهي بعد: --:--:--</div>
-</section>
+  <!-- Products Grid -->
+  <section class="products" id="products">
+    <div class="product">
+      <img src="C:\Users\ر\Downloads\images\p2.jpg.png" alt="منتج 1">
+      <h3>منتج 1</h3>
+      <p>350 درهم</p>
+      <button>اشترِ الآن</button>
+    </div>
+    <div class="product">
+      <img src="C:\Users\ر\Downloads\images\p4.jpg.jpeg" alt="منتج 2">
+      <h3>منتج 2</h3>
+      <p>420 درهم</p>
+      <button>اشترِ الآن</button>
+    </div>
+    <div class="product">
+      <img src="C:\Users\ر\Downloads\images\p17.jpg.jpeg" alt="منتج 3">
+      <h3>منتج 3</h3>
+      <p>280 درهم</p>
+      <button>اشترِ الآن</button>
+    </div>
+    <div class="product">
+      <img src="C:\Users\ر\Downloads\images\p9.jpg.jpeg" alt="منتج 4">
+      <h3>منتج 4</h3>
+      <p>500 درهم</p>
+      <button>اشترِ الآن</button>
+    </div>
+  </section>
 
+  <!-- Featured Section -->
+  <section class="featured" id="featured">
+    <h2>عروضنا المميزة</h2>
+    <img src="C:\Users\ر\Downloads\images\p15.jpg.jpeg" alt="عرض مميز">
+  </section>
 
-<section class="products" id="products"></section>
-
-<section style="padding:20px">
-  <h2 style="color:var(--gold);text-align:center">⭐ آراء الزبناء</h2>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px">
-    <div class="card" onclick="addToCart(${p.id})"><div class="card-content">"منتوج فخم وخدمة سريعة"<br>— أمين</div></div>
-    <div class="card" onclick="addToCart(${p.id})"><div class="card-content">"ثقة وجودة عالية"<br>— سارة</div></div>
-    <div class="card" onclick="addToCart(${p.id})"><div class="card-content">"غادي نعاود نطلب"<br>— يوسف</div></div>
-  </div>
-</section>
-
-<section style="padding:20px;text-align:center">
-  <h3 style="color:var(--gold)">🔒 ضمان الثقة</h3>
-  <p>✔️ الدفع عند الاستلام<br>✔️ توصيل سريع لجميع المدن<br>✔️ خدمة الزبناء عبر WhatsApp</p>
-</section>
-
-<div class="modal" id="modal">
-  <div class="modal-content" id="modalContent"></div>
-</div>
-
-<div class="cart" onclick="toggleCart()">🛒</div>
-
-<div class="cart-panel" id="cartPanel">
-  <h3 id="orderTitle">🧾 معلومات الطلب</h3>
-  <input placeholder="الإسم الكامل" id="name" />
-  <input placeholder="المدينة" id="city" />
-  <input placeholder="الحي" id="area" />
-  <input placeholder="الهاتف" id="phone" />
-  <input placeholder="كود تتبع الطلب (اختياري)" id="track" />
-  <h3 id="orderTitle">اطلب الآن</h3>
-  <input placeholder="الإسم" id="name" />
-  <input placeholder="المدينة، الحي" id="city" />
-  <input placeholder="الهاتف" id="phone" />
-  <button class="order-btn" onclick="sendWhatsApp()">📦 اطلب عبر WhatsApp</button>
-</div>
-
-<script>
-  let lang='ar', currency='MAD'; let cartItems=[];
-  const rate=0.092; // MAD to EUR approx
-
-  const products=[
-    {id:1,name:{ar:'ساعة فاخرة',en:'Luxury Watch'},price:1200,img:'https://dummyimage.com/600x600/111/ffffff&text=WATCH',desc:{ar:'ساعة راقية بتصميم ذهبي مع ضمان.',en:'Premium gold luxury watch with warranty.'}},
-    {id:2,name:{ar:'نظارات شمسية',en:'Sunglasses'},price:800,img:'https://dummyimage.com/600x600/111/ffffff&text=GLASSES',desc:{ar:'نظارات فخمة بعدسات UV.',en:'Luxury UV protection sunglasses.'}},
-    {id:3,name:{ar:'محفظة جلد',en:'Leather Wallet'},price:500,img:'https://dummyimage.com/600x600/111/ffffff&text=WALLET',desc:{ar:'محفظة جلد طبيعي.',en:'Genuine leather wallet.'}}
-  ];
-    {name:{ar:'ساعة فاخرة',en:'Luxury Watch'},price:1200,img:'https://dummyimage.com/600x600/111/ffffff&text=WATCH',desc:{ar:'ساعة راقية بتصميم ذهبي.',en:'Elegant gold luxury watch.'}},
-    {name:{ar:'نظارات شمسية',en:'Sunglasses'},price:800,img:'https://dummyimage.com/600x600/111/ffffff&text=GLASSES',desc:{ar:'نظارات فخمة بجودة عالية.',en:'Premium quality sunglasses.'}}
-  ];
-
-  function addToCart(id){
-    const prod=products.find(p=>p.id===id);
-    cartItems.push({name:prod.name[lang],price:prod.price});
-    alert(lang==='ar'?'تمت إضافة المنتوج للسلة':'Product added to cart');
-  }
-
-  function render(){
-    const c=document.getElementById('products');
-    c.innerHTML='';
-    products.forEach(p=>{
-      const price=currency==='MAD'?p.price:(p.price*rate).toFixed(0);
-      c.innerHTML+=`
-      <div class="card" onclick="addToCart(${p.id})">
-        <img src="${p.img}" onclick="showDetails('${p.desc[lang]}')" />
-        <div class="card-content">
-          <div class="old-price">${currency==='MAD'?'MAD':'€'} ${price*1.2}</div>
-          <div class="new-price">${currency==='MAD'?'MAD':'€'} ${price}</div>
-          <div class="desc">${p.name[lang]}</div>
-        </div>
-      </div>`;
-    });
-  }
-
-  function showDetails(text){
-    document.getElementById('modalContent').innerText=text;
-    document.getElementById('modal').style.display='flex';
-  }
-  document.getElementById('modal').onclick=()=>modal.style.display='none';
-
-  function toggleCart(){cartPanel.classList.toggle('active')}
-  function toggleLang(){lang=lang==='ar'?'en':'ar';document.documentElement.dir=lang==='ar'?'rtl':'ltr';render()}
-  function toggleCurrency(){currency=currency==='MAD'?'EUR':'MAD';render()}
-
-  function sendWhatsApp(){
-    const n=name.value,c=city.value,a=area.value,p=phone.value,t=track.value;
-    const orderId='NS'+Math.floor(Math.random()*100000);
-    const items=cartItems.map(i=>i.name+' x1').join(', ');
-    const msg=`🛒 Nouva Shop Order%0A📦 Products: ${items}%0A🆔 Order ID: ${orderId}%0A👤 Name: ${n}%0A🏙️ City: ${c}%0A📍 Area: ${a}%0A📞 Phone: ${p}%0A📦 Tracking: ${t}`;
-    window.open(`https://wa.me/212623999334?text=${msg}`,'_blank');
-  }
-
-  // notifications
-  const names=['أمين','سارة','يوسف','هشام','مريم'];
-  const cities=['الدار البيضاء','الرباط','مراكش','طنجة','فاس'];
-  setInterval(()=>{
-    const n=names[Math.floor(Math.random()*names.length)];
-    const c=cities[Math.floor(Math.random()*cities.length)];
-    const box=document.getElementById('notify');
-    box.innerText=`🔔 ${n} من ${c} قام بطلب منتوج الآن`;
-    box.style.display='block';
-    setTimeout(()=>box.style.display='none',4000);
-  },9000);
-
-  function closePopup(){document.getElementById('popup').style.display='none'}(){
-    const n=name.value,c=city.value,p=phone.value;
-    const msg=`Order Nouva Shop%0AName:${n}%0ACity:${c}%0APhone:${p}`;
-    window.open(`https://wa.me/212623999334?text=${msg}`,'_blank');
-  }
-
-  // Countdown
-  let seconds=6*60*60;
-  setInterval(()=>{
-    if(seconds>0){
-      seconds--;
-      const h=String(Math.floor(seconds/3600)).padStart(2,'0');
-      const m=String(Math.floor((seconds%3600)/60)).padStart(2,'0');
-      const s=String(seconds%60).padStart(2,'0');
-      document.getElementById('countdown').innerText=`⏳ عرض محدود ينتهي بعد: ${h}:${m}:${s}`;
-    }
-  },1000);
-
-  render();
-</script>
+  <!-- Footer -->
+  <footer id="contact">
+    <p>&copy; 2026 NOUVA SHOP. كل الحقوق محفوظة.</p>
+    <div class="social">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">TikTok</a>
+    </div>
+  </footer>
 
 </body>
 </html>
