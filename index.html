@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOUNA SHOP</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Open Sans',sans-serif}
+body{background:#111;color:#FFD37F}
+
+/* ===== HEADER CENTER + PROFILE ===== */
+.top-bar{
+display:flex;
+flex-direction:column;
+align-items:center;
+padding:12px 16px;
+background:#111;
+position:sticky;
+top:0;
+z-index:1000;
+}
+.profile{
+width:60px;height:60px;border-radius:50%;
+background:#FFD37F url('https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?crop=entropy&cs=tinysrgb&fit=crop&h=60&w=60') center/cover no-repeat;
+border:2px solid #fff;margin-bottom:8px;box-shadow:0 5px 15px rgba(255,211,127,.5);
+}
+.logo{font-family:'Montserrat';letter-spacing:2px;font-size:24px;margin-bottom:8px;}
+
+/* ===== SWITCHERS ===== */
+.switchers{display:flex;gap:8px}
+.switchers button{border:1px solid #FFD37F;background:none;color:#FFD37F;padding:5px 12px;border-radius:20px;cursor:pointer}
+
+/* ===== CATEGORIES ===== */
+.categories{display:flex;gap:10px;padding:10px;overflow-x:auto}
+.categories button{border:1px solid #FFD37F;background:none;color:#FFD37F;padding:6px 14px;border-radius:20px;cursor:pointer}
+.categories .active{background:#FFD37F;color:#111}
+
+/* ===== CART FLOAT ===== */
+.cart-float{
+position:fixed;top:90px;left:15px;width:60px;height:60px;
+background:linear-gradient(135deg,#FFD37F,#b08d3f);
+border-radius:50%;display:flex;justify-content:center;align-items:center;
+font-size:22px;color:#111;cursor:pointer;z-index:999;
+box-shadow:0 10px 30px rgba(255,211,127,.5);
+animation:float 3s infinite ease-in-out
+}
+.cart-float span{
+position:absolute;top:-6px;right:-6px;
+background:#25D366;color:#fff;font-size:12px;
+padding:2px 6px;border-radius:50%
+}
+@keyframes float{50%{transform:translateY(-6px)}}
+
+/* ===== PRODUCTS ===== */
+.products{
+padding:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:20px
+}
+.product{
+background:#1e1e1e;border-radius:16px;padding:14px;text-align:center;position:relative
+}
+.product img{width:100%;border-radius:12px}
+.product h3{margin:10px 0;font-size:15px}
+.product button{
+background:#FFD37F;border:none;padding:8px 16px;border-radius:10px;font-weight:bold;cursor:pointer
+}
+.badge{
+position:absolute;top:10px;right:10px;
+background:#25D366;color:#fff;font-size:12px;
+padding:4px 8px;border-radius:12px;
+opacity:0;transition:.3s
+}
+.badge.show{opacity:1}
+
+/* ===== CART PANEL ===== */
+.cart-panel{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;justify-content:center;align-items:flex-end;z-index:998}
+.cart-box{
+background:#111;width:100%;max-height:90%;
+border-radius:22px 22px 0 0;
+padding:20px;animation:slideUp .4s ease;overflow:auto
+}
+@keyframes slideUp{from{transform:translateY(100%)}}
+.cart-header{display:flex;justify-content:space-between;margin-bottom:10px}
+.cart-item{display:flex;justify-content:space-between;margin-bottom:10px}
+.qty{display:flex;gap:8px;align-items:center}
+.qty button{
+width:26px;height:26px;border-radius:50%;
+border:1px solid #FFD37F;background:none;color:#FFD37F;cursor:pointer
+}
+.cart-actions{display:flex;gap:10px;margin-top:12px}
+.cart-actions button{flex:1;padding:12px;border:none;border-radius:12px;font-weight:bold}
+.cancel{background:#333;color:#fff}
+.whatsapp{background:#25D366;color:#fff}
+
+/* ===== FORM ===== */
+.order-form{
+margin-top:15px;
+display:flex;
+flex-direction:column;
+gap:10px
+}
+.order-form input,
+.order-form select{padding:10px;border-radius:10px;border:none;outline:none}
+.error{color:#ff6b6b;font-size:13px;display:none;margin-top:-6px}
+input.error-input, select.error-input{border:1px solid #ff6b6b}
+
+/* ===== CONFIRMATION ===== */
+.confirmation{
+display:none;min-height:100vh;justify-content:center;align-items:center;
+flex-direction:column;text-align:center
+}
+.confetti{position:fixed;width:8px;height:8px;animation:fall 1s linear forwards}
+@keyframes fall{to{transform:translateY(100vh) rotate(360deg);opacity:0}}
+</style>
+</head>
+<body>
+<div id="shop">
+
+<div class="top-bar">
+  <div class="profile"></div>
+  <div class="logo">NOUNA SHOP</div>
+  <div class="switchers">
+    <button onclick="toggleLang()">AR / EN</button>
+    <button onclick="toggleCurrency()">MAD / €</button>
+  </div>
+</div>
+
+<div class="categories" id="categories"></div>
+<div class="cart-float" onclick="openCart()">🛒<span id="cartCount">0</span></div>
+<div class="products" id="products"></div>
+
+<div class="cart-panel" id="cartPanel">
+ <div class="cart-box">
+  <div class="cart-header">
+   <strong id="cartTitle">سلة المشتريات</strong>
+   <span onclick="closeCart()">✕</span>
+  </div>
+  <div id="cartItems"></div>
+  <p id="totalPrice"></p>
+  <div class="order-form">
+    <input id="customerName" placeholder="الاسم الكامل">
+    <div id="nameError" class="error"></div>
+    <input id="customerAddress" placeholder="العنوان">
+    <div id="addressError" class="error"></div>
+    <select id="city">
+      <option value="">-- اختار المدينة --</option>
+      <option value="Rabat">الرباط - 0 درهم</option>
+      <option value="Sale">سلا - 0 درهم</option>
+      <option value="Casa">الدار البيضاء - 25 درهم</option>
+      <option value="Other">مدينة أخرى - 35 درهم</option>
+    </select>
+    <div id="cityError" class="error"></div>
+  </div>
+  <div class="cart-actions">
+   <button class="cancel" onclick="clearCart()">إلغاء</button>
+   <button class="whatsapp" onclick="sendOrder()">واتساب</button>
+  </div>
+ </div>
+</div>
+</div>
+
+<div class="confirmation" id="confirmPage">
+<h2>✅ تم تأكيد الطلب</h2>
+<p>سنتواصل معك عبر واتساب</p>
+<button onclick="location.reload()">الرجوع</button>
+</div>
+
+<script>
+// ===== PRODUCTS DATA =====
+const productsData = [
+{id:1,cat:"coffee",ar:"ماكينة قهوة",en:"Coffee Machine",price:350,img:"https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6"},
+{id:2,cat:"coffee",ar:"مطحنة قهوة",en:"Coffee Grinder",price:280,img:"https://images.unsplash.com/photo-1587730938486-27f0c2f1fefc"},
+{id:3,cat:"coffee",ar:"إبريق تحضير",en:"Coffee Brewer",price:190,img:"https://images.unsplash.com/photo-1509042239860-f550ce710b93"},
+{id:4,cat:"coffee",ar:"آلة إسبريسو",en:"Espresso Machine",price:550,img:"https://images.unsplash.com/photo-1521302080371-d8bfccfbb9cf"},
+{id:5,cat:"coffee",ar:"ميزان قهوة",en:"Coffee Scale",price:120,img:"https://images.unsplash.com/photo-1524594150408-1b6a9f14f0d1"},
+{id:6,cat:"cups",ar:"كوب خزف",en:"Ceramic Cup",price:90,img:"https://images.unsplash.com/photo-1527169402691-a3fbf6e11382"},
+{id:7,cat:"cups",ar:"كوب زجاج",en:"Glass Cup",price:70,img:"https://images.unsplash.com/photo-1517705008128-361805f42e86"},
+{id:8,cat:"cups",ar:"كوب فاخر",en:"Luxury Cup",price:150,img:"https://images.unsplash.com/photo-1541167760496-1628856ab772"},
+{id:9,cat:"cups",ar:"طقم أكواب",en:"Cup Set",price:260,img:"https://images.unsplash.com/photo-1504754524776-8f4f37790ca0"},
+{id:10,cat:"cups",ar:"كوب سفر",en:"Travel Mug",price:180,img:"https://images.unsplash.com/photo-1523362628745-0c100150b504"},
+{id:11,cat:"accessories",ar:"ملعقة قهوة",en:"Coffee Spoon",price:40,img:"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd"},
+{id:12,cat:"accessories",ar:"فلتر قهوة",en:"Coffee Filter",price:60,img:"https://images.unsplash.com/photo-1481391319762-47dff72954d9"},
+{id:13,cat:"accessories",ar:"وعاء بن",en:"Bean Jar",price:130,img:"https://images.unsplash.com/photo-1507914372368-b2b085b925a1"},
+{id:14,cat:"accessories",ar:"مكبس قهوة",en:"Tamper",price:110,img:"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+{id:15,cat:"accessories",ar:"فرشاة تنظيف",en:"Cleaning Brush",price:55,img:"https://images.unsplash.com/photo-1524594150408-1b6a9f14f0d1"},
+{id:16,cat:"decor",ar:"لوحة قهوة",en:"Coffee Wall Art",price:200,img:"https://images.unsplash.com/photo-1509042239860-f550ce710b93"},
+{id:17,cat:"decor",ar:"ديكور خشبي",en:"Wood Decor",price:170,img:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085"},
+{id:18,cat:"decor",ar:"ساعة حائط",en:"Wall Clock",price:220,img:"https://images.unsplash.com/photo-1519710164239-da123dc03ef4"},
+{id:19,cat:"decor",ar:"إضاءة مقهى",en:"Cafe Light",price:300,img:"https://images.unsplash.com/photo-1492724441997-5dc865305da7"},
+{id:20,cat:"decor",ar:"نبتة ديكور",en:"Decor Plant",price:95,img:"https://images.unsplash.com/photo-1501004318641-b39e6451bec6"}
+]
+
+let cart=[],lang="ar",currency="MAD",rate=10.9,currentCat="all"
+const deliveryFees={Rabat:0,Sale:0,Casa:25,Other:35}
+
+const products=document.getElementById("products")
+const categories=document.getElementById("categories")
+const cartItems=document.getElementById("cartItems")
+
+function renderCategories(){
+ const cats=["all",...new Set(productsData.map(p=>p.cat))]
+ categories.innerHTML=""
+ cats.forEach(c=>{
+ categories.innerHTML+=`<button class="${c===currentCat?"active":""}" onclick="filterCat('${c}')">${c==="all"?(lang==="ar"?"الكل":"All"):c}</button>`
+ })
+}
+function filterCat(c){currentCat=c;renderCategories();renderProducts()}
+function renderProducts(){
+ products.innerHTML=""
+ productsData.filter(p=>currentCat==="all"||p.cat===currentCat).forEach(p=>{
+  products.innerHTML+=`
+  <div class="product">
+   <div class="badge">✓</div>
+   <img src="${p.img}">
+   <h3>${lang==="ar"?p.ar:p.en}</h3>
+   <p>${format(p.price)}</p>
+   <button onclick="addToCart(${p.id},this)">${lang==="ar"?"أضف":"Add"}</button>
+  </div>`
+ })
+}
+renderCategories();renderProducts()
+
+function addToCart(id,btn){
+ const item=cart.find(i=>i.id===id)
+ item?item.qty++:cart.push({...productsData.find(p=>p.id===id),qty:1})
+ updateCartDisplay()
+ btn.parentElement.querySelector(".badge").classList.add("show")
+ setTimeout(()=>btn.parentElement.querySelector(".badge").classList.remove("show"),700)
+ confetti()
+}
+
+function updateCartDisplay(){
+ cartCount.innerText=cart.reduce((a,b)=>a+b.qty,0)
+ renderCart()
+}
+
+function openCart(){cartPanel.style.display="flex";renderCart()}
+function closeCart(){cartPanel.style.display="none"}
+
+function renderCart(){
+ cartItems.innerHTML=""
+ let total=0
+ cart.forEach(i=>{
+  total+=i.price*i.qty
+  cartItems.innerHTML+=`
+  <div class="cart-item">
+   <span>${lang==="ar"?i.ar:i.en}</span>
+   <div class="qty">
+    <button onclick="changeQty(${i.id},-1)">−</button>
+    <span>${i.qty}</span>
+    <button onclick="changeQty(${i.id},1)">+</button>
+   </div>
+  </div>`
+ })
+ totalPrice.innerText=(lang==="ar"?"المجموع: ":"Total: ")+format(total)
+}
+
+function changeQty(id,v){
+ const item=cart.find(i=>i.id===id)
+ if(item){item.qty+=v;if(item.qty<=0)cart=cart.filter(i=>i.id!==id)}
+ updateCartDisplay()
+}
+
+function clearCart(){cart=[];updateCartDisplay()}
+
+/* ========== SEND ORDER WITH VALIDATION ========== */
+function sendOrder(){
+ clearErrors()
+ if(!cart.length){alert(lang==="ar"?"السلة فارغة":"Cart is empty"); return}
+
+ let name = customerName.value.trim()
+ let address = customerAddress.value.trim()
+ let city = document.getElementById("city").value
+ let valid = true
+
+ if(!name){setError(customerName,"nameError",lang==="ar"?"الاسم ضروري":"Name required"); valid=false}
+ if(!address){setError(customerAddress,"addressError",lang==="ar"?"العنوان ضروري":"Address required"); valid=false}
+ if(!city){setError(document.getElementById("city"),"cityError",lang==="ar"?"اختار المدينة":"Select city"); valid=false}
+ if(!valid) return
+
+ const delivery=deliveryFees[city]
+ let msg=`${lang==="ar"?"طلب جديد من NOUNA SHOP":"New Order from NOUNA SHOP"}\n`
+ msg += `${lang==="ar"?"الاسم":"Name"}: ${name}\n${lang==="ar"?"العنوان":"Address"}: ${address}\n${lang==="ar"?"المدينة":"City"}: ${city}\n\n`
+
+ let total=0
+ cart.forEach(i=>{
+   total += i.price*i.qty
+   msg += `• ${lang==="ar"?i.ar:i.en} ×${i.qty}\n`
+ })
+ total+=delivery
+ msg += lang==="ar"?`\nالتوصيل: ${delivery} MAD\nالمجموع: ${format(total)}\nالدفع عند الاستلام`
+              :`\nDelivery: ${delivery}\nTotal: ${format(total)}\nCash on delivery`
+
+ let phone="212623999334"
+ window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,"_blank")
+
+ cartPanel.style.display="none"
+ shop.style.display="none"
+ confirmPage.style.display="flex"
+ confetti()
+}
+
+/* ===== ERROR HELPERS ===== */
+function setError(input,id,msg){input.classList.add("error-input"); document.getElementById(id).innerText=msg; document.getElementById(id).style.display="block"}
+function clearErrors(){document.querySelectorAll(".error").forEach(e=>e.style.display="none"); document.querySelectorAll(".error-input").forEach(e=>e.classList.remove("error-input"))}
+
+function toggleLang(){lang=lang==="ar"?"en":"ar";document.documentElement.dir=lang==="ar"?"rtl":"ltr";renderCategories();renderProducts();updateCartDisplay()}
+function toggleCurrency(){currency=currency==="MAD"?"EUR":"MAD";updateCartDisplay()}
+function format(p){return currency==="MAD"?p+" MAD":(p/rate).toFixed(1)+" €"}
+
+function confetti(){for(let i=0;i<25;i++){const c=document.createElement("div");c.className="confetti";c.style.left=Math.random()*100+"%";c.style.background=`hsl(${Math.random()*360},100%,50%)`;document.body.appendChild(c);setTimeout(()=>c.remove(),1000)}}
+</script>
+</body>
+</html>
