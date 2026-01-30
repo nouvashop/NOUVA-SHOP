@@ -3,369 +3,352 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NOUNA SHOP</title>
+<title>NOUVA SHOP</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Open Sans',sans-serif}
-body{background:#f5f5f7;color:#333}
+body{background:#f5f5f5;color:#111}
 
-/* ===== HEADER ===== */
-.top-bar{
-display:flex;flex-direction:column;align-items:center;padding:16px;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,0.1);position:sticky;top:0;z-index:1000;border-bottom:1px solid #eee;
+/* HEADER */
+header{
+background:#000;
+color:#FFD700;
+padding:16px;
+position:sticky;
+top:0;
+z-index:1000;
+text-align:center;
+box-shadow:0 4px 12px rgba(0,0,0,.5)
 }
-.profile{
-width:60px;height:60px;border-radius:50%;background:#FFD700 url('https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?crop=entropy&cs=tinysrgb&fit=crop&h=60&w=60') center/cover no-repeat;border:2px solid #fff;margin-bottom:8px;box-shadow:0 5px 15px rgba(255,215,0,0.5);
+.logo{font-family:'Montserrat';font-size:26px;letter-spacing:2px}
+.controls{margin-top:8px;display:flex;justify-content:center;gap:10px}
+.controls button{
+border:none;
+padding:6px 14px;
+border-radius:20px;
+background:linear-gradient(135deg,#000,#FFD700);
+color:#fff;
+cursor:pointer;
+font-weight:600
 }
-.logo{font-family:'Montserrat';letter-spacing:2px;font-size:26px;margin-bottom:8px;color:#FFD700;}
 
-/* ===== SWITCHERS ===== */
-.switchers{display:flex;gap:10px}
-.switchers button{
-border:none;padding:6px 14px;border-radius:25px;cursor:pointer;font-weight:600;
-background:linear-gradient(135deg,#000000,#FFD700);color:#fff;transition:0.3s;
+/* FILTER */
+.filters{
+display:flex;
+gap:10px;
+padding:14px;
+flex-wrap:wrap;
+justify-content:center
 }
-.switchers button:hover{opacity:0.85}
-
-/* ===== CATEGORIES ===== */
-.categories{display:flex;gap:10px;padding:10px 16px;overflow-x:auto;scroll-behavior:smooth;}
-.categories button{
-border:none;padding:8px 18px;border-radius:25px;cursor:pointer;font-weight:600;
-background:#eee;color:#333;transition:0.3s;
-}
-.categories button.active{background:linear-gradient(135deg,#000000,#FFD700);color:#fff}
-
-/* ===== FILTERS ===== */
-.filters{display:flex;gap:10px;padding:0 16px;margin-bottom:10px;flex-wrap:wrap;}
-.filters input[type="number"],.filters select{
-padding:8px;border-radius:12px;border:1px solid #ccc;outline:none
+.filters input,.filters select{
+padding:8px;
+border-radius:12px;
+border:1px solid #ccc
 }
 .filters button{
-padding:8px 16px;border:none;border-radius:20px;background:linear-gradient(135deg,#000000,#FFD700);color:#fff;cursor:pointer;font-weight:600;
-transition:0.3s
-}
-.filters button:hover{opacity:0.85}
-
-/* ===== CART FLOAT FIXED TOP-RIGHT ===== */
-.cart-float{
-position:fixed;top:100px;right:20px;width:60px;height:60px;
-background:linear-gradient(135deg,#000000,#FFD700);
-border-radius:50%;display:flex;justify-content:center;align-items:center;
-font-size:22px;color:#fff;cursor:pointer;z-index:999;
-box-shadow:0 10px 30px rgba(0,0,0,.5);
-transition: transform 0.3s ease-out;
-}
-.cart-float span{
-position:absolute;top:-6px;right:-6px;
-background:#FFD700;color:#000;font-size:12px;
-padding:2px 6px;border-radius:50%
+padding:8px 16px;
+border:none;
+border-radius:20px;
+background:#000;
+color:#FFD700;
+font-weight:bold;
+cursor:pointer
 }
 
-/* ===== PRODUCTS ===== */
+/* PRODUCTS */
 .products{
-padding:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px
+padding:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:18px
 }
 .product{
-background:#fff;border-radius:16px;padding:14px;text-align:center;position:relative;box-shadow:0 6px 15px rgba(0,0,0,0.08);transition:0.3s
+background:#fff;
+border-radius:18px;
+padding:12px;
+text-align:center;
+box-shadow:0 8px 20px rgba(0,0,0,.1);
+transition:.3s
 }
-.product:hover{transform:translateY(-4px);box-shadow:0 12px 20px rgba(0,0,0,0.12);}
-.product img{width:100%;border-radius:12px}
-.product h3{margin:10px 0;font-size:15px;color:#333;font-weight:600}
-.product p{font-weight:600;color:#FFD700;margin-bottom:8px}
+.product:hover{transform:translateY(-4px)}
+.product img{
+width:100%;
+height:160px;
+object-fit:cover;
+border-radius:14px
+}
+.product h3{margin:8px 0;font-size:15px}
+.product p{color:#FFD700;font-weight:bold}
 .product button{
-background:linear-gradient(135deg,#000000,#FFD700);border:none;padding:8px 16px;border-radius:12px;font-weight:bold;color:#fff;cursor:pointer;transition:0.3s
+margin-top:6px;
+padding:8px 14px;
+border:none;
+border-radius:14px;
+background:#000;
+color:#FFD700;
+cursor:pointer;
+font-weight:bold
 }
-.product button:hover{opacity:0.85}
-.badge{
-position:absolute;top:10px;right:10px;
-background:#FFD700;color:#000;font-size:12px;
-padding:4px 8px;border-radius:12px;
-opacity:0;transition:.3s
-}
-.badge.show{opacity:1}
 
-/* ===== CART PANEL ===== */
-.cart-panel{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;justify-content:center;align-items:flex-end;z-index:998}
+/* CART FLOAT */
+.cart-float{
+position:fixed;
+bottom:20px;
+right:20px;
+width:70px;
+height:70px;
+border-radius:50%;
+background:#000;
+color:#FFD700;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+cursor:pointer;
+box-shadow:0 0 25px rgba(255,215,0,.6);
+z-index:999
+}
+.cart-float span{
+position:absolute;
+top:-6px;
+right:-6px;
+background:#FFD700;
+color:#000;
+padding:4px 8px;
+border-radius:50%;
+font-size:13px
+}
+
+/* CART PANEL */
+.cart-panel{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.6);
+display:none;
+align-items:flex-end;
+justify-content:center;
+z-index:1000
+}
 .cart-box{
-background:#fff;width:100%;max-height:90%;border-radius:22px 22px 0 0;padding:20px;animation:slideUp .4s ease;overflow:auto;
-box-shadow:0 -4px 20px rgba(0,0,0,0.1)
+background:#fff;
+width:100%;
+max-height:90%;
+border-radius:22px 22px 0 0;
+padding:20px;
+overflow:auto;
+animation:up .4s ease
 }
-@keyframes slideUp{from{transform:translateY(100%)}}
-.cart-header{display:flex;justify-content:space-between;margin-bottom:10px;font-weight:600;color:#333;font-size:18px}
-.cart-item{display:flex;justify-content:space-between;margin-bottom:10px;font-weight:500;color:#555}
-.qty{display:flex;gap:8px;align-items:center}
-.qty button{
-width:26px;height:26px;border-radius:50%;
-border:none;background:linear-gradient(135deg,#000000,#FFD700);color:#fff;cursor:pointer
+@keyframes up{from{transform:translateY(100%)}}
+.cart-header{
+display:flex;
+justify-content:space-between;
+font-weight:bold;
+font-size:18px
 }
-.cart-actions{display:flex;gap:10px;margin-top:12px}
-.cart-actions button{flex:1;padding:12px;border:none;border-radius:12px;font-weight:bold;transition:0.3s}
-.cancel{background:#aaa;color:#fff}
-.cancel:hover{opacity:0.85}
-.whatsapp{background:#FFD700;color:#000}
-.whatsapp:hover{opacity:0.85}
+.cart-item{
+display:flex;
+justify-content:space-between;
+margin:8px 0
+}
 
-/* ===== FORM ===== */
+/* FORM */
 .order-form{
-margin-top:15px;display:flex;flex-direction:column;gap:10px
+margin-top:12px;
+display:flex;
+flex-direction:column;
+gap:8px
 }
-.order-form input,
-.order-form select{padding:10px;border-radius:10px;border:1px solid #ccc;outline:none}
-.error{color:#ff6b6b;font-size:13px;display:none;margin-top:-6px}
-input.error-input, select.error-input{border:1px solid #ff6b6b}
+.order-form input,.order-form select{
+padding:10px;
+border-radius:12px;
+border:1px solid #ccc
+}
 
-/* ===== CONFIRMATION ===== */
-.confirmation{
-display:none;min-height:100vh;justify-content:center;align-items:center;
-flex-direction:column;text-align:center;font-size:18px;color:#333
+/* BUTTONS */
+.cart-actions{
+display:flex;
+gap:10px;
+margin-top:14px
 }
-.confirmation button{
-margin-top:20px;padding:10px 20px;border:none;border-radius:12px;background:linear-gradient(135deg,#000000,#FFD700);color:#fff;font-weight:600;cursor:pointer;transition:0.3s
+.cart-actions button{
+flex:1;
+padding:12px;
+border:none;
+border-radius:14px;
+font-weight:bold;
+cursor:pointer
 }
-.confirmation button:hover{opacity:0.85}
+.cancel{background:#aaa;color:#fff}
+.whatsapp{background:#FFD700;color:#000}
 
-.confetti{position:fixed;width:8px;height:8px;animation:fall 1s linear forwards}
-@keyframes fall{to{transform:translateY(100vh) rotate(360deg);opacity:0}}
+/* CONFIRM */
+.confirm{
+display:none;
+min-height:100vh;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+text-align:center
+}
+.confirm button{
+margin-top:16px;
+padding:10px 20px;
+border:none;
+border-radius:14px;
+background:#000;
+color:#FFD700;
+font-weight:bold
+}
 </style>
 </head>
-<body>
-<div id="shop">
 
-<div class="top-bar">
-  <div class="profile"></div>
-  <div class="logo">NOUNA SHOP</div>
-  <div class="switchers">
-    <button onclick="toggleLang()">AR / EN</button>
-    <button onclick="toggleCurrency()">MAD / €</button>
-  </div>
+<body>
+
+<header>
+<div class="logo">NOUVA SHOP</div>
+<div class="controls">
+<button onclick="toggleLang()">AR / EN</button>
+<button onclick="toggleCurrency()">MAD / €</button>
 </div>
+</header>
 
 <div class="filters">
-  <input type="number" id="minPrice" placeholder="السعر الأدنى">
-  <input type="number" id="maxPrice" placeholder="السعر الأعلى">
-  <select id="availability">
-    <option value="all">الكل</option>
-    <option value="available">متوفر</option>
-    <option value="unavailable">غير متوفر</option>
-  </select>
-  <button onclick="applyFilters()">تصفية</button>
+<input type="number" id="minPrice" placeholder="السعر الأدنى">
+<input type="number" id="maxPrice" placeholder="السعر الأعلى">
+<input type="text" id="coupon" placeholder="كود الخصم">
+<button onclick="renderProducts()">تصفية</button>
 </div>
 
-<div class="categories" id="categories"></div>
-<div class="cart-float" onclick="openCart()">🛒<span id="cartCount">0</span></div>
 <div class="products" id="products"></div>
 
+<div class="cart-float" onclick="openCart()">🛒<span id="cartCount">0</span></div>
+
 <div class="cart-panel" id="cartPanel">
- <div class="cart-box">
-  <div class="cart-header">
-   <strong id="cartTitle">سلة المشتريات</strong>
-   <span onclick="closeCart()" style="cursor:pointer">✕</span>
-  </div>
-  <div id="cartItems"></div>
-  <p id="totalPrice"></p>
-  <div class="order-form">
-    <input id="customerName" placeholder="الاسم الكامل">
-    <div id="nameError" class="error"></div>
-    <input id="customerAddress" placeholder="العنوان">
-    <div id="addressError" class="error"></div>
-    <select id="city">
-      <option value="">-- اختار المدينة --</option>
-      <option value="Rabat">الرباط - 0 درهم</option>
-      <option value="Sale">سلا - 0 درهم</option>
-      <option value="Casa">الدار البيضاء - 25 درهم</option>
-      <option value="Other">مدينة أخرى - 35 درهم</option>
-    </select>
-    <div id="cityError" class="error"></div>
-  </div>
-  <div class="cart-actions">
-   <button class="cancel" onclick="clearCart()">إلغاء</button>
-   <button class="whatsapp" onclick="sendOrder()">واتساب</button>
-  </div>
- </div>
+<div class="cart-box">
+<div class="cart-header">
+<span>السلة</span>
+<span onclick="closeCart()" style="cursor:pointer">✕</span>
+</div>
+
+<div id="cartItems"></div>
+<p id="total"></p>
+
+<div class="order-form">
+<input id="name" placeholder="الاسم">
+<input id="address" placeholder="العنوان">
+<select id="city">
+<option value="">المدينة</option>
+<option value="Rabat">الرباط</option>
+<option value="Casa">الدار البيضاء</option>
+<option value="Other">مدينة أخرى</option>
+</select>
+</div>
+
+<div class="cart-actions">
+<button class="cancel" onclick="clearCart()">إلغاء</button>
+<button class="whatsapp" onclick="sendOrder()">واتساب</button>
+</div>
 </div>
 </div>
 
-<div class="confirmation" id="confirmPage">
-<h2>✅ تم تأكيد الطلب</h2>
-<p>سنتواصل معك عبر واتساب</p>
-<button onclick="location.reload()">الرجوع</button>
+<div class="confirm" id="confirm">
+<h2>✅ تم إرسال الطلب</h2>
+<button onclick="location.reload()">رجوع</button>
 </div>
 
 <script>
-// ===== PRODUCTS DATA 20 REAL IMAGES =====
-const productsData = [
-{id:1,cat:"coffee",ar:"ماكينة قهوة",en:"Coffee Machine",price:350,available:true,img:"https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6"},
-{id:2,cat:"coffee",ar:"مطحنة قهوة",en:"Coffee Grinder",price:280,available:true,img:"https://images.unsplash.com/photo-1587730938486-27f0c2f1fefc"},
-{id:3,cat:"coffee",ar:"إبريق تحضير",en:"Coffee Brewer",price:190,available:false,img:"https://images.unsplash.com/photo-1509042239860-f550ce710b93"},
-{id:4,cat:"coffee",ar:"آلة إسبريسو",en:"Espresso Machine",price:550,available:true,img:"https://images.unsplash.com/photo-1521302080371-d8bfccfbb9cf"},
-{id:5,cat:"coffee",ar:"ميزان قهوة",en:"Coffee Scale",price:120,available:true,img:"https://images.unsplash.com/photo-1524594150408-1b6a9f14f0d1"},
-{id:6,cat:"cups",ar:"كوب خزف",en:"Ceramic Cup",price:90,available:true,img:"https://images.unsplash.com/photo-1527169402691-a3fbf6e11382"},
-{id:7,cat:"cups",ar:"كوب زجاج",en:"Glass Cup",price:70,available:false,img:"https://images.unsplash.com/photo-1517705008128-361805f42e86"},
-{id:8,cat:"cups",ar:"كوب فاخر",en:"Luxury Cup",price:150,available:true,img:"https://images.unsplash.com/photo-1541167760496-1628856ab772"},
-{id:9,cat:"cups",ar:"طقم أكواب",en:"Cup Set",price:260,available:true,img:"https://images.unsplash.com/photo-1504754524776-8f4f37790ca0"},
-{id:10,cat:"cups",ar:"كوب سفر",en:"Travel Mug",price:180,available:true,img:"https://images.unsplash.com/photo-1523362628745-0c100150b504"},
-{id:11,cat:"coffee",ar:"آلة فلترة",en:"Coffee Filter Machine",price:320,available:true,img:"https://images.unsplash.com/photo-1580910051071-5407cdb40f71"},
-{id:12,cat:"coffee",ar:"كبسولات قهوة",en:"Coffee Capsules",price:90,available:true,img:"https://images.unsplash.com/photo-1612277794327-2f4cfa1f87c0"},
-{id:13,cat:"coffee",ar:"صانعة لاتيه",en:"Latte Maker",price:430,available:true,img:"https://images.unsplash.com/photo-1580910063560-1aa75c37eb06"},
-{id:14,cat:"cups",ar:"كوب إسبرسو",en:"Espresso Cup",price:80,available:true,img:"https://images.unsplash.com/photo-1606813909684-b5dbf313c37c"},
-{id:15,cat:"cups",ar:"كوب شاي",en:"Tea Cup",price:60,available:true,img:"https://images.unsplash.com/photo-1509042239860-7c6e5d2e6c3b"},
-{id:16,cat:"cups",ar:"طقم فناجين",en:"Cup Set Deluxe",price:200,available:true,img:"https://images.unsplash.com/photo-1579126126995-3c1a8e97b2db"},
-{id:17,cat:"cups",ar:"كوب القهوة الصباحي",en:"Morning Coffee Mug",price:120,available:true,img:"https://images.unsplash.com/photo-1498804103079-a6351b050096"},
-{id:18,cat:"cups",ar:"كوب عصير",en:"Juice Cup",price:90,available:true,img:"https://images.unsplash.com/photo-1509042239860-3c3b6cde2d88"},
-{id:19,cat:"coffee",ar:"آلة قهوة يدوية",en:"Manual Coffee Machine",price:480,available:true,img:"https://images.unsplash.com/photo-1532614338840-98c6de7c029f"},
-{id:20,cat:"coffee",ar:"مطحنة يدوية",en:"Manual Grinder",price:200,available:true,img:"https://images.unsplash.com/photo-1547592180-6f5c0625e0c1"}
-];
+if("serviceWorker" in navigator){
+navigator.serviceWorker.register("sw.js")
+}
 
-let cart=[],lang="ar",currency="MAD",rate=10.9,currentCat="all"
-const deliveryFees={Rabat:0,Sale:0,Casa:25,Other:35}
+let lang="ar",currency="MAD",rate=10.9
+let cart=[]
+let discount=0
+
+const coupons={
+"NOUVA10":10,
+"NOUVA20":20
+}
+
+const productsData=[
+{id:1,ar:"ماكينة قهوة",en:"Coffee Machine",price:350,img:"https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6"},
+{id:2,ar:"مطحنة قهوة",en:"Coffee Grinder",price:280,img:"https://images.unsplash.com/photo-1587730938486-27f0c2f1fefc"},
+{id:3,ar:"كوب فاخر",en:"Luxury Cup",price:150,img:"https://images.unsplash.com/photo-1541167760496-1628856ab772"},
+{id:4,ar:"كوب سفر",en:"Travel Mug",price:180,img:"https://images.unsplash.com/photo-1523362628745-0c100150b504"},
+{id:5,ar:"آلة إسبريسو",en:"Espresso Machine",price:550,img:"https://images.unsplash.com/photo-1521302080371-d8bfccfbb9cf"}
+]
 
 const products=document.getElementById("products")
-const categories=document.getElementById("categories")
+const cartPanel=document.getElementById("cartPanel")
 const cartItems=document.getElementById("cartItems")
-
-// ===== RENDER FUNCTIONS =====
-function renderCategories(){
- const cats=["all",...new Set(productsData.map(p=>p.cat))]
- categories.innerHTML=""
- cats.forEach(c=>{
-   categories.innerHTML+=`<button class="${c===currentCat?"active":""}" onclick="filterCat('${c}')">${c==="all"?(lang==="ar"?"الكل":"All"):c}</button>`
- })
-}
-function filterCat(c){currentCat=c;renderCategories();renderProducts()}
+const cartCount=document.getElementById("cartCount")
 
 function renderProducts(){
- let minPrice=parseFloat(document.getElementById("minPrice").value)||0
- let maxPrice=parseFloat(document.getElementById("maxPrice").value)||Infinity
- let availability=document.getElementById("availability").value
-
- products.innerHTML=""
- productsData.filter(p=>{
-   if(currentCat!=="all" && p.cat!==currentCat) return false
-   if(p.price<minPrice || p.price>maxPrice) return false
-   if(availability==="available" && !p.available) return false
-   if(availability==="unavailable" && p.available) return false
-   return true
- }).forEach(p=>{
-  products.innerHTML+=`
-  <div class="product">
-   <div class="badge">✓</div>
-   <img src="${p.img}">
-   <h3>${lang==="ar"?p.ar:p.en}</h3>
-   <p>${format(p.price)}</p>
-   <button onclick="addToCart(${p.id},this)">${lang==="ar"?"أضف":"Add"}</button>
-  </div>`
- })
-}
-function applyFilters(){renderProducts()}
-renderCategories();renderProducts()
-
-// ===== CART FUNCTIONS =====
-function addToCart(id,btn){
- const item=cart.find(i=>i.id===id)
- item?item.qty++:cart.push({...productsData.find(p=>p.id===id),qty:1})
- updateCartDisplay()
- btn.parentElement.querySelector(".badge").classList.add("show")
- setTimeout(()=>btn.parentElement.querySelector(".badge").classList.remove("show"),700)
- confetti()
+products.innerHTML=""
+let min=minPrice.value||0
+let max=maxPrice.value||99999
+productsData.filter(p=>p.price>=min&&p.price<=max).forEach(p=>{
+products.innerHTML+=`
+<div class="product">
+<img src="${p.img}" loading="lazy">
+<h3>${lang==="ar"?p.ar:p.en}</h3>
+<p>${currency==="MAD"?p.price+" د.م":(p.price/rate).toFixed(1)+" €"}</p>
+<button onclick="addToCart(${p.id})">أضف</button>
+</div>`
+})
 }
 
-function updateCartDisplay(){
- cartCount.innerText=cart.reduce((a,b)=>a+b.qty,0)
- renderCart()
+function addToCart(id){
+let item=cart.find(i=>i.id===id)
+if(item)item.qty++
+else cart.push({...productsData.find(p=>p.id===id),qty:1})
+updateCart()
 }
 
-function openCart(){cartPanel.style.display="flex";renderCart()}
+function updateCart(){
+cartCount.textContent=cart.reduce((a,b)=>a+b.qty,0)
+cartItems.innerHTML=""
+let total=0
+cart.forEach(i=>{
+total+=i.price*i.qty
+cartItems.innerHTML+=`
+<div class="cart-item">
+<span>${i.ar} × ${i.qty}</span>
+<span>${i.price*i.qty} د.م</span>
+</div>`
+})
+
+let code=coupon.value.toUpperCase()
+if(coupons[code]) discount=coupons[code]; else discount=0
+let final=total-(total*discount/100)
+
+totalEl=`المجموع: ${final.toFixed(0)} د.م`
+if(discount) totalEl+=` (خصم ${discount}%)`
+document.getElementById("total").textContent=totalEl
+}
+
+function clearCart(){cart=[];updateCart()}
+function openCart(){cartPanel.style.display="flex"}
 function closeCart(){cartPanel.style.display="none"}
+function toggleLang(){lang=lang==="ar"?"en":"ar";renderProducts()}
+function toggleCurrency(){currency=currency==="MAD"?"EUR":"MAD";renderProducts()}
 
-function renderCart(){
- cartItems.innerHTML=""
- let total=0
- cart.forEach(i=>{
-  total+=i.price*i.qty
-  cartItems.innerHTML+=`
-  <div class="cart-item">
-   <span>${lang==="ar"?i.ar:i.en}</span>
-   <div class="qty">
-    <button onclick="changeQty(${i.id},-1)">−</button>
-    <span>${i.qty}</span>
-    <button onclick="changeQty(${i.id},1)">+</button>
-   </div>
-  </div>`
- })
- totalPrice.innerText=(lang==="ar"?"المجموع: ":"Total: ")+format(total)
-}
-
-function changeQty(id,v){
- const item=cart.find(i=>i.id===id)
- if(item){item.qty+=v;if(item.qty<=0)cart=cart.filter(i=>i.id!==id)}
- updateCartDisplay()
-}
-
-function clearCart(){cart=[];updateCartDisplay()}
-
-// ===== ORDER =====
 function sendOrder(){
- clearErrors()
- if(!cart.length){alert(lang==="ar"?"السلة فارغة":"Cart is empty"); return}
-
- let name = customerName.value.trim()
- let address = customerAddress.value.trim()
- let city = document.getElementById("city").value
- let valid = true
-
- if(!name){setError(customerName,"nameError",lang==="ar"?"الاسم ضروري":"Name required"); valid=false}
- if(!address){setError(customerAddress,"addressError",lang==="ar"?"العنوان ضروري":"Address required"); valid=false}
- if(!city){setError(document.getElementById("city"),"cityError",lang==="ar"?"اختار المدينة":"Select city"); valid=false}
- if(!valid) return
-
- const delivery=deliveryFees[city]
- let msg=`${lang==="ar"?"طلب جديد من NOUNA SHOP":"New Order from NOUNA SHOP"}\n`
- msg += `${lang==="ar"?"الاسم":"Name"}: ${name}\n${lang==="ar"?"العنوان":"Address"}: ${address}\n${lang==="ar"?"المدينة":"City"}: ${city}\n\n`
-
- let total=0
- cart.forEach(i=>{
-   total += i.price*i.qty
-   msg += `• ${lang==="ار"?i.ar:i.en} ×${i.qty}\n`
- })
- total+=delivery
- msg += lang==="ar"?`\nالتوصيل: ${delivery} MAD\nالمجموع: ${format(total)}\nالدفع عند الاستلام`
-              :`\nDelivery: ${delivery}\nTotal: ${format(total)}\nCash on delivery`
-
- let phone="212623999334"
- window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,"_blank")
-
- cartPanel.style.display="none"
- shop.style.display="none"
- confirmPage.style.display="flex"
- confetti()
+if(!cart.length)return alert("السلة فارغة")
+let msg="طلب جديد من NOUVA SHOP\n"
+cart.forEach(i=>msg+=`${i.ar} x${i.qty}\n`)
+msg+=document.getElementById("total").textContent
+window.open("https://wa.me/212600000000?text="+encodeURIComponent(msg))
+document.getElementById("confirm").style.display="flex"
 }
 
-// ===== ERRORS =====
-function setError(input,id,msg){input.classList.add("error-input"); document.getElementById(id).innerText=msg; document.getElementById(id).style.display="block"}
-function clearErrors(){document.querySelectorAll(".error").forEach(e=>e.style.display="none"); document.querySelectorAll(".error-input").forEach(e=>e.classList.remove("error-input"))}
-
-// ===== LANG & CURRENCY =====
-function toggleLang(){lang=lang==="ar"?"en":"ar";document.documentElement.dir=lang==="ar"?"rtl":"ltr";renderCategories();renderProducts();updateCartDisplay()}
-function toggleCurrency(){currency=currency==="MAD"?"EUR":"MAD";updateCartDisplay()}
-function format(p){return currency==="MAD"?p+" MAD":(p/rate).toFixed(1)+" €"}
-
-// ===== CONFETTI =====
-function confetti(){for(let i=0;i<25;i++){const c=document.createElement("div");c.className="confetti";c.style.left=Math.random()*100+"%";c.style.background=`hsl(${Math.random()*60},100%,50%)`;document.body.appendChild(c);setTimeout(()=>c.remove(),1000)}}
-
-// ===== SMOOTH FLOATING CART =====
-const cartFloatElem = document.querySelector(".cart-float");
-let targetY = 100; // initial top
-let currentY = targetY;
-
-function animateCart(){
-    currentY += (targetY - currentY) * 0.1; // easing
-    cartFloatElem.style.top = currentY + "px";
-    requestAnimationFrame(animateCart);
-}
-animateCart();
-
-window.addEventListener("scroll", ()=>{
-    targetY = 100 + window.scrollY * 0.05; // slight follow
-});
+renderProducts()
 </script>
+
 </body>
 </html>
