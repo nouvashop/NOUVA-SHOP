@@ -5,60 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NOUVA SHOP</title>
 
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#000000">
-
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Open Sans',sans-serif}
-body{background:#f5f5f5;color:#111}
+body{background:#f4f4f4;color:#111}
 
 /* HEADER */
 header{
-background:#000;
-color:#FFD700;
-padding:16px;
-position:sticky;
-top:0;
-z-index:1000;
-text-align:center;
-box-shadow:0 4px 12px rgba(0,0,0,.5)
+background:#000;color:#FFD700;padding:16px;text-align:center;
+position:sticky;top:0;z-index:1000
 }
 .logo{font-family:'Montserrat';font-size:26px;letter-spacing:2px}
-.controls{margin-top:8px;display:flex;justify-content:center;gap:10px}
-.controls button{
-border:none;
-padding:6px 14px;
-border-radius:20px;
-background:linear-gradient(135deg,#000,#FFD700);
-color:#fff;
-cursor:pointer;
-font-weight:600
-}
 
 /* FILTER */
-.filters{
-display:flex;
-gap:10px;
-padding:14px;
-flex-wrap:wrap;
-justify-content:center
-}
-.filters input,.filters select{
-padding:8px;
-border-radius:12px;
-border:1px solid #ccc
-}
-.filters button{
-padding:8px 16px;
-border:none;
-border-radius:20px;
-background:#000;
-color:#FFD700;
-font-weight:bold;
-cursor:pointer
-}
+.filters{display:flex;gap:10px;justify-content:center;padding:14px;flex-wrap:wrap}
+.filters input{padding:8px;border-radius:12px;border:1px solid #ccc}
 
 /* PRODUCTS */
 .products{
@@ -73,186 +35,128 @@ border-radius:18px;
 padding:12px;
 text-align:center;
 box-shadow:0 8px 20px rgba(0,0,0,.1);
-transition:.3s
+transition:.3s;
+position:relative;
+touch-action:pan-y
 }
-.product:hover{transform:translateY(-4px)}
 .product img{
-width:100%;
-height:160px;
-object-fit:cover;
-border-radius:14px
+width:100%;height:160px;object-fit:cover;border-radius:14px
 }
 .product h3{margin:8px 0;font-size:15px}
 .product p{color:#FFD700;font-weight:bold}
-.product button{
+
+/* ADD / QTY */
+.add-btn, .qty-box{
 margin-top:6px;
-padding:8px 14px;
-border:none;
-border-radius:14px;
-background:#000;
-color:#FFD700;
-cursor:pointer;
-font-weight:bold
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px
+}
+.add-btn button{
+padding:8px 16px;border:none;border-radius:14px;
+background:#000;color:#FFD700;font-weight:bold;cursor:pointer
+}
+.qty-box button{
+width:32px;height:32px;border-radius:50%;
+border:none;background:#000;color:#FFD700;font-size:18px
 }
 
 /* CART FLOAT */
 .cart-float{
-position:fixed;
-bottom:20px;
-right:20px;
-width:70px;
-height:70px;
-border-radius:50%;
-background:#000;
-color:#FFD700;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:28px;
-cursor:pointer;
+position:fixed;bottom:20px;right:20px;
+width:70px;height:70px;border-radius:50%;
+background:#000;color:#FFD700;
+display:flex;align-items:center;justify-content:center;
+font-size:28px;cursor:pointer;
 box-shadow:0 0 25px rgba(255,215,0,.6);
 z-index:999
 }
+.cart-float.shake{animation:shake .4s}
+@keyframes shake{
+0%,100%{transform:translateX(0)}
+25%{transform:translateX(-4px)}
+75%{transform:translateX(4px)}
+}
 .cart-float span{
-position:absolute;
-top:-6px;
-right:-6px;
-background:#FFD700;
-color:#000;
-padding:4px 8px;
-border-radius:50%;
-font-size:13px
+position:absolute;top:-6px;right:-6px;
+background:#FFD700;color:#000;
+padding:4px 8px;border-radius:50%;font-size:13px
 }
 
 /* CART PANEL */
 .cart-panel{
-position:fixed;
-inset:0;
+position:fixed;inset:0;
 background:rgba(0,0,0,.6);
-display:none;
-align-items:flex-end;
-justify-content:center;
+display:none;align-items:flex-end;justify-content:center;
 z-index:1000
 }
 .cart-box{
-background:#fff;
-width:100%;
-max-height:90%;
-border-radius:22px 22px 0 0;
-padding:20px;
-overflow:auto;
-animation:up .4s ease
+background:#fff;width:100%;max-height:90%;
+border-radius:22px 22px 0 0;padding:20px;overflow:auto
 }
-@keyframes up{from{transform:translateY(100%)}}
-.cart-header{
-display:flex;
-justify-content:space-between;
-font-weight:bold;
-font-size:18px
-}
-.cart-item{
-display:flex;
-justify-content:space-between;
-margin:8px 0
-}
+.cart-item{display:flex;justify-content:space-between;margin:8px 0}
 
-/* FORM */
-.order-form{
-margin-top:12px;
-display:flex;
-flex-direction:column;
-gap:8px
+/* MODAL */
+.modal{
+position:fixed;inset:0;background:rgba(0,0,0,.6);
+display:none;align-items:center;justify-content:center;z-index:2000
 }
-.order-form input,.order-form select{
-padding:10px;
-border-radius:12px;
-border:1px solid #ccc
+.modal-box{
+background:#fff;border-radius:20px;padding:20px;
+width:90%;max-width:320px;text-align:center
 }
-
-/* BUTTONS */
-.cart-actions{
-display:flex;
-gap:10px;
-margin-top:14px
+.modal-box img{width:100%;border-radius:14px}
+.modal-qty{display:flex;justify-content:center;gap:10px;margin:10px 0}
+.modal-qty button{
+width:36px;height:36px;border-radius:50%;
+border:none;background:#000;color:#FFD700;font-size:18px
 }
-.cart-actions button{
-flex:1;
-padding:12px;
-border:none;
-border-radius:14px;
-font-weight:bold;
-cursor:pointer
-}
-.cancel{background:#aaa;color:#fff}
-.whatsapp{background:#FFD700;color:#000}
 
 /* CONFIRM */
 .confirm{
-display:none;
-min-height:100vh;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-text-align:center
-}
-.confirm button{
-margin-top:16px;
-padding:10px 20px;
-border:none;
-border-radius:14px;
-background:#000;
-color:#FFD700;
-font-weight:bold
+display:none;min-height:100vh;
+align-items:center;justify-content:center;
+flex-direction:column;text-align:center
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<div class="logo">NOUVA SHOP</div>
-<div class="controls">
-<button onclick="toggleLang()">AR / EN</button>
-<button onclick="toggleCurrency()">MAD / €</button>
-</div>
-</header>
+<header><div class="logo">NOUVA SHOP</div></header>
 
 <div class="filters">
 <input type="number" id="minPrice" placeholder="السعر الأدنى">
 <input type="number" id="maxPrice" placeholder="السعر الأعلى">
-<input type="text" id="coupon" placeholder="كود الخصم">
-<button onclick="renderProducts()">تصفية</button>
 </div>
 
 <div class="products" id="products"></div>
 
-<div class="cart-float" onclick="openCart()">🛒<span id="cartCount">0</span></div>
+<div class="cart-float" id="cartFloat" onclick="openCart()">🛒<span id="cartCount">0</span></div>
 
+<!-- CART -->
 <div class="cart-panel" id="cartPanel">
 <div class="cart-box">
-<div class="cart-header">
-<span>السلة</span>
-<span onclick="closeCart()" style="cursor:pointer">✕</span>
-</div>
-
+<h3>السلة</h3>
 <div id="cartItems"></div>
 <p id="total"></p>
-
-<div class="order-form">
-<input id="name" placeholder="الاسم">
-<input id="address" placeholder="العنوان">
-<select id="city">
-<option value="">المدينة</option>
-<option value="Rabat">الرباط</option>
-<option value="Casa">الدار البيضاء</option>
-<option value="Other">مدينة أخرى</option>
-</select>
+<button onclick="sendOrder()">واتساب</button>
+</div>
 </div>
 
-<div class="cart-actions">
-<button class="cancel" onclick="clearCart()">إلغاء</button>
-<button class="whatsapp" onclick="sendOrder()">واتساب</button>
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modal-box">
+<img id="modalImg">
+<h3 id="modalTitle"></h3>
+<p id="modalPrice"></p>
+<div class="modal-qty">
+<button onclick="changeModalQty(-1)">−</button>
+<span id="modalQty">1</span>
+<button onclick="changeModalQty(1)">+</button>
 </div>
+<button onclick="confirmAdd()">إضافة للسلة</button>
 </div>
 </div>
 
@@ -262,56 +166,62 @@ font-weight:bold
 </div>
 
 <script>
-if("serviceWorker" in navigator){
-navigator.serviceWorker.register("sw.js")
-}
-
-let lang="ar",currency="MAD",rate=10.9
 let cart=[]
-let discount=0
-
-const coupons={
-"NOUVA10":10,
-"NOUVA20":20
-}
+let selectedProduct=null
+let modalQty=1
 
 const productsData=[
-{id:1,ar:"ماكينة قهوة",en:"Coffee Machine",price:350,img:"https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6"},
-{id:2,ar:"مطحنة قهوة",en:"Coffee Grinder",price:280,img:"https://images.unsplash.com/photo-1587730938486-27f0c2f1fefc"},
-{id:3,ar:"كوب فاخر",en:"Luxury Cup",price:150,img:"https://images.unsplash.com/photo-1541167760496-1628856ab772"},
-{id:4,ar:"كوب سفر",en:"Travel Mug",price:180,img:"https://images.unsplash.com/photo-1523362628745-0c100150b504"},
-{id:5,ar:"آلة إسبريسو",en:"Espresso Machine",price:550,img:"https://images.unsplash.com/photo-1521302080371-d8bfccfbb9cf"} 
+{id:1,ar:"ماكينة قهوة",price:350,img:"https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6"},
+{id:2,ar:"مطحنة قهوة",price:280,img:"https://images.unsplash.com/photo-1587730938486-27f0c2f1fefc"},
+{id:3,ar:"كوب فاخر",price:150,img:"https://images.unsplash.com/photo-1541167760496-1628856ab772"},
+{id:4,ar:"كوب سفر",price:180,img:"https://images.unsplash.com/photo-1523362628745-0c100150b504"},
+{id:5,ar:"آلة إسبريسو",price:550,img:"https://images.unsplash.com/photo-1521302080371-d8bfccfbb9cf"}
 ]
 
 const products=document.getElementById("products")
-const cartPanel=document.getElementById("cartPanel")
-const cartItems=document.getElementById("cartItems")
-const cartCount=document.getElementById("cartCount")
 
 function renderProducts(){
 products.innerHTML=""
-let min=minPrice.value||0
-let max=maxPrice.value||99999
-productsData.filter(p=>p.price>=min&&p.price<=max).forEach(p=>{
+productsData.forEach(p=>{
 products.innerHTML+=`
-<div class="product">
-<img src="${p.img}" loading="lazy">
-<h3>${lang==="ar"?p.ar:p.en}</h3>
-<p>${currency==="MAD"?p.price+" د.م":(p.price/rate).toFixed(1)+" €"}</p>
-<button onclick="addToCart(${p.id})">أضف</button>
+<div class="product" data-id="${p.id}">
+<img src="${p.img}">
+<h3>${p.ar}</h3>
+<p>${p.price} د.م</p>
+<div class="add-btn">
+<button onclick="openModal(${p.id})">أضف للسلة</button>
+</div>
 </div>`
 })
 }
+renderProducts()
 
-function addToCart(id){
-let item=cart.find(i=>i.id===id)
-if(item)item.qty++
-else cart.push({...productsData.find(p=>p.id===id),qty:1})
+function openModal(id){
+selectedProduct=productsData.find(p=>p.id===id)
+modalQty=1
+modal.style.display="flex"
+modalImg.src=selectedProduct.img
+modalTitle.innerText=selectedProduct.ar
+modalPrice.innerText=selectedProduct.price+" د.م"
+modalQtyEl.innerText=modalQty
+}
+
+function changeModalQty(v){
+modalQty=Math.max(1,modalQty+v)
+modalQtyEl.innerText=modalQty
+}
+
+function confirmAdd(){
+let item=cart.find(i=>i.id===selectedProduct.id)
+if(item)item.qty+=modalQty
+else cart.push({...selectedProduct,qty:modalQty})
+modal.style.display="none"
 updateCart()
+flyToCart()
 }
 
 function updateCart(){
-cartCount.textContent=cart.reduce((a,b)=>a+b.qty,0)
+cartCount.innerText=cart.reduce((a,b)=>a+b.qty,0)
 cartItems.innerHTML=""
 let total=0
 cart.forEach(i=>{
@@ -322,32 +232,21 @@ cartItems.innerHTML+=`
 <span>${i.price*i.qty} د.م</span>
 </div>`
 })
-
-let code=coupon.value.toUpperCase()
-if(coupons[code]) discount=coupons[code]; else discount=0
-let final=total-(total*discount/100)
-
-totalEl=`المجموع: ${final.toFixed(0)} د.م`
-if(discount) totalEl+=` (خصم ${discount}%)`
-document.getElementById("total").textContent=totalEl
+document.getElementById("total").innerText="المجموع: "+total+" د.م"
 }
 
-function clearCart(){cart=[];updateCart()}
-function openCart(){cartPanel.style.display="flex"}
-function closeCart(){cartPanel.style.display="none"}
-function toggleLang(){lang=lang==="ar"?"en":"ar";renderProducts()}
-function toggleCurrency(){currency=currency==="MAD"?"EUR":"MAD";renderProducts()}
+function flyToCart(){
+cartFloat.classList.add("shake")
+setTimeout(()=>cartFloat.classList.remove("shake"),400)
+}
 
+function openCart(){cartPanel.style.display="flex"}
 function sendOrder(){
-if(!cart.length)return alert("السلة فارغة")
 let msg="طلب جديد من NOUVA SHOP\n"
 cart.forEach(i=>msg+=`${i.ar} x${i.qty}\n`)
-msg+=document.getElementById("total").textContent
 window.open("https://wa.me/212600000000?text="+encodeURIComponent(msg))
-document.getElementById("confirm").style.display="flex"
+confirm.style.display="flex"
 }
-
-renderProducts()
 </script>
 
 </body>
